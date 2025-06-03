@@ -10,17 +10,6 @@ app.listen(8080,()=>{
     console.log("Server Started");
 });
 
-
-import mongoose from "mongoose";
-const userSchema = mongoose.Schema({
-    name:{type: String},
-    email: {type: String},
-    pass : {type: String},
-});
-//const user = mongoose.model("User",userSchema);
-export default mongoose.model("User",userSchema);
-
-
 app.use(cors());
 app.use(express.json());
 app.get("/",(req,res)=>{
