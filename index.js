@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import productModel from './models/productModel';
+import userModel from './models/userModel.js';
+import productModel from './models/productModel.js';
 import cors from 'cors';
 const app = express();
 
@@ -8,6 +9,17 @@ app.listen(8080,()=>{
     mongoose.connect("mongodb://localhost:27017/gcet");
     console.log("Server Started");
 });
+
+
+import mongoose from "mongoose";
+const userSchema = mongoose.Schema({
+    name:{type: String},
+    email: {type: String},
+    pass : {type: String},
+});
+//const user = mongoose.model("User",userSchema);
+export default mongoose.model("User",userSchema);
+
 
 app.use(cors());
 app.use(express.json());
