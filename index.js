@@ -12,7 +12,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const MONGODB_URI = process.env.MONGODB_URI; 
+const MONGODB_URI = process.env.MONGODB_URI;
+//const user = encodeURIComponent(process.env.DBUser);
+//const user = encodeURIComponent(process.env.DBPass); 
+//const MONGODB_URI = `mongodb+srv://${DBUser}:${DBPass}@cluster0.fejtw9t.mongodb.net/gcet?retryWrites=true&w=majority&appName=Cluster0`
 
 app.use("/users", userRouter);
 app.use("/products", productRouter);
