@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 const productSchema = mongoose.Schema({
+  pid: { type: String, unique: true},
   name: { type: String },
   price: { type: Number },
 });
