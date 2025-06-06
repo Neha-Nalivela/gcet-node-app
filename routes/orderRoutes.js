@@ -1,12 +1,29 @@
-import express from 'express'
-import orderModel from "../models/orderModel.js";
+import express from 'express';
+import orderModel from '../models/orderModel.js';
 
-const orderRouter = express.Router()
+const orderRouter = express.Router();
 
-orderRouter.post("/new", async (req, res) => {
-  const {email, orderValue} = req.body;
-  const result= orderModel.insertOne({email, orderValue});
-  return res.json(result);
+// Create a new order
+orderRouter.post('/new', async (req, res) => {
+  const { email, orderValue } = req.body;
+
+  try {
+    const result = await orderModel.create({ email, orderValue });
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create order' });
+  }
+});
+// Get orders by email
+orderRouter.get('/:email', async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const result = await orderModel.find({ email });
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch orders' });
+  }
 });
 
-export default orderRouter
+export default orderRouter;
