@@ -3,15 +3,16 @@ import userModel from "../models/userModel.js";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 const SECRET_KEY = "helloworld";
-
 const userRouter = express.Router();
 
 // Register user
 userRouter.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
-  const hashpassword = await bcrypt.hash(password,10);
+  //const hashpassword = await bcrypt.hash(password,10);
   try {
-    const result = await userModel.create({ name, email, password: hashpassword });
+    const result = await userModel.create({ name, email, 
+    //  password: hashpassword 
+    password});
     
     res.json(result);
   } catch (err) {
@@ -24,10 +25,10 @@ userRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const result = await userModel.findOne({ email });
   if (!result) return res.json({ message: "Invalid user" });
-  const matchPassword = await bcrypt.compare(password,result.password);
-  if(!matchPassword){
-    return res.status(400).json({message: "Invalid password"})
-  }
+  // const matchPassword = await bcrypt.compare(password,result.password);
+  // if(!matchPassword){
+  //   return res.status(400).json({message: "Invalid password"})
+  // }
   const token = jwt.sign({email: result.email, id: result._id}, SECRET_KEY);
   console.log(result);
   return res.json({user: result, token: token});
