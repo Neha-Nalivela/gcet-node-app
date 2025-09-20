@@ -26,4 +26,14 @@ orderRouter.get('/:email', async (req, res) => {
   }
 });
 
+orderRouter.get('/all', async (req, res) => {
+
+  try {
+    const result = await orderModel.find();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch orders' });
+  }
+});
+
 export default orderRouter;

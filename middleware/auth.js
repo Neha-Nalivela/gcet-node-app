@@ -4,19 +4,21 @@ const SECRET_KEY = "helloworld";
 const auth = (req, res, next) => {
   try {
     let token = req.headers.authorization;
-    if (token) {
-      token = token.split(" ")[1]; 
+    console.log("Received token:", token);
+
+    if (token && token.startsWith("Bearer ")) {
+      token = token.split(" ")[1];
       let user = jwt.verify(token, SECRET_KEY);
-      req.userId = user.id;
       req.role = user.role;
+      req.email = user.email;
       next();
     } else {
-      res.statu(401).json({ message: "Unauthorized Access" });
+      return res.status(401).json({ message: "Unauthorized Access - Token Missing" });
     }
   } catch (err) {
-    console.log(err);
-    res.status(401).json({ message: "Unauthorized" });
+    console.log("JWT Error:", err.message);
+    return res.status(401).json({ message: "Unauthorized - Token Invalid" });
   }
 };
 
-export default auth
+export default auth;
